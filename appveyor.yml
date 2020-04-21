@@ -28,8 +28,8 @@ install:
 
 build: off
 build_script:
-  - python -u setup.py bdist_wheel --static-deps
-  - python -u setup.py build_ext --inplace --static-deps
+  - python -u setup.py bdist_wheel 
+  - python -u setup.py build_ext --inplace 
   - python -u test.py -vv -p
 
 test: off
