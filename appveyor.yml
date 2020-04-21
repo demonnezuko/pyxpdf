@@ -28,6 +28,7 @@ install:
 
 build: off
 build_script:
+  - ps: rm .\src\pyxpdf\*.cpp
   - python -u setup.py bdist_wheel --with-cython
   - python -u setup.py build_ext --inplace --with-cython
   - python -u test.py -vv -p
