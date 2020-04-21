@@ -1,0 +1,44 @@
+version: 1.0.{build}
+
+image:
+  - Visual Studio 2019
+  
+branches:
+  only:
+    - master
+    - dev
+    
+environment:
+  PYPI_TOKEN:
+    secure: TSic/utnQqlKheBgCuM1QQ381HG0TOijCrDA3FVUT+N3SuC8KuiBdtWuAy0LO+KwEODeNC0gBulxtxpHf3037z4cYX+fRsrYpXODONZPHsYeHw7AVPPtSNatQHXn319Yk5aJ+NYyM0knT9Lvr4Pyzpk7TpyF71G7jJkOj1JmC/6qlvXdy73D/FDstIlpF231KZV6UNB1zLYxnRxRGtZ2DryJdAa83nP6EqPyVGIJt8L3kkk8rjdjqnNcamzXvFw39ixK+wxF0cNSkMWxCdOhrw==
+  matrix:
+  - python: 38
+  - python: 38-x64
+  - python: 37
+  - python: 37-x64
+  - python: 36
+  - python: 36-x64
+  - python: 35
+  - python: 35-x64
+
+install:
+    - SET PATH=C:\\Python%PYTHON%;c:\\Python%PYTHON%\\scripts;%PATH%
+    - python -m pip.__main__ install -U pip wheel setuptools twine
+    - pip install -r requirements.txt
+
+build: off
+build_script:
+  - python -u setup.py bdist_wheel --static-deps
+  - python -u setup.py build_ext --inplace --static-deps
+  - python -u test.py -vv -p
+
+test: off
+test_script:
+  - ps: Get-ChildItem dist\*.whl | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
+  
+on_success:
+  - ps: |
+        if ($env:APPVEYOR_REPO_TAG -eq "true" -and $env:APPVEYOR_REPO_TAG_NAME.StartsWith('v'))
+        {
+          python -m twine upload -u '__token__' -p $env:PYPI_TOKEN  --repository-url https://test.pypi.org/legacy/ .\dist\*
+        }
