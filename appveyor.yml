@@ -29,7 +29,7 @@ install:
 build: off
 build_script:
   - python -u setup.py bdist_wheel --with-cython
-  - python -u setup.py build_ext --inplace 
+  - python -u setup.py build_ext --inplace --with-cython
   - python -u test.py -vv -p
 
 test: off
