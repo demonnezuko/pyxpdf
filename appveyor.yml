@@ -9,7 +9,8 @@ branches:
     - dev
     
 environment:
-  PYPI_TOKEN:
+  TWINE_USERNAME: __token__
+  TWINE_PASSWORD:
     secure: TSic/utnQqlKheBgCuM1QQ381HG0TOijCrDA3FVUT+N3SuC8KuiBdtWuAy0LO+KwEODeNC0gBulxtxpHf3037z4cYX+fRsrYpXODONZPHsYeHw7AVPPtSNatQHXn319Yk5aJ+NYyM0knT9Lvr4Pyzpk7TpyF71G7jJkOj1JmC/6qlvXdy73D/FDstIlpF231KZV6UNB1zLYxnRxRGtZ2DryJdAa83nP6EqPyVGIJt8L3kkk8rjdjqnNcamzXvFw39ixK+wxF0cNSkMWxCdOhrw==
   matrix:
   - python: 38
@@ -41,5 +42,11 @@ on_success:
   - ps: |
         if ($env:APPVEYOR_REPO_TAG -eq "true" -and $env:APPVEYOR_REPO_TAG_NAME.StartsWith('v'))
         {
-          python -m twine upload --skip-existing -u '__token__' -p $env:PYPI_TOKEN  --repository-url https://test.pypi.org/legacy/ .\dist\*
+          python -m twine upload --skip-existing --repository-url https://test.pypi.org/legacy/ .\dist\*
+          
+          # Unnesessary Write-Host for making exitcode 0
+          if ($?)
+            { Write-Host "Wheel uploaded." }
+          else 
+            { Write-Host "Wheel upload failed." }
         }
