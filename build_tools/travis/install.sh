@@ -26,7 +26,11 @@ ccache --max-size 100M --show-stats
 pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
 
-python setup.py develop
+SETUP_OPTS="--with-coverage"
+if [ "$CHECK_WARNINGS" == "true" ]; then
+  SETUP_OPTS="$SETUP_OPTS --warnings"
+fi
+python setup.py develop $SETUP_OPTS
 
 ccache --show-stats
 # Useful for debugging how ccache is used
