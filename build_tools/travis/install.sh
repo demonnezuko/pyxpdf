@@ -3,7 +3,8 @@ set -e
 
 gcc --version
 
-pip install --upgrade pip setuptools wheel coverage codecov
+pip install --upgrade pip setuptools wheel 
+pip install coverage codecov
 pip install -r requirements.txt
 
 SETUP_OPTS="--with-coverage"
