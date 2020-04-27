@@ -32,5 +32,3 @@ ccache --show-stats
 # Useful for debugging how ccache is used
 # cat $CCACHE_LOGFILE
 
-# fast fail
-build_tools/travis/travis_fastfail.sh
