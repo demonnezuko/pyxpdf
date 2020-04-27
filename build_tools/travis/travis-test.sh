@@ -95,7 +95,10 @@ if [ -n "$USE_WHEEL" ] && [ $# -eq 0 ]; then
 elif [ -n "$USE_SDIST" ] && [ $# -eq 0 ]; then
   # ensure some warnings are not issued
   export CFLAGS=$CFLAGS" -Wno-sign-compare -Wno-unused-result"
-  $PYTHON setup.py sdist --with-cython --warnings
+  if [ -n "$RUN_COVERAGE" ]; then
+    COVERAGE_FLAG=--coverage
+  fi
+  $PYTHON setup.py sdist --with-cython --warnings $COVERAGE_FLAG
   # Make another virtualenv to install into
   virtualenv --python=`which $PYTHON` venv-for-sdist
   . venv-for-sdist/bin/activate
