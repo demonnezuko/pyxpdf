@@ -3,10 +3,10 @@ version: 1.0.{build}
 image:
   - Visual Studio 2019
   
-branches:
-  only:
-    - master
-    - dev
+# branches:
+#   only:
+#     - master
+#     - dev
     
 environment:
   TWINE_USERNAME: __token__
