@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.com/demonnezuko/pyxpdf.svg?branch=master)](https://travis-ci.com/demonnezuko/pyxpdf)
+[![Build status](https://ci.appveyor.com/api/projects/status/tcvcaujq1r7tvt9u/branch/master?svg=true)](https://ci.appveyor.com/project/demonnezuko/pyxpdf/branch/master)
+[![codecov](https://codecov.io/gh/demonnezuko/pyxpdf/branch/master/graph/badge.svg)](https://codecov.io/gh/demonnezuko/pyxpdf)
+
 # pyxpdf - v0.1
 Fast Python PDF module based on [xpdf-reader](https://www.xpdfreader.com/) sources.
 
