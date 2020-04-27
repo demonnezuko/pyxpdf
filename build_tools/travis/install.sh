@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+gcc --version
+
 pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
 
