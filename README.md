@@ -1,18 +1,7 @@
 # pyxpdf
 Fast Python PDF module based on [xpdf-reader](https://www.xpdfreader.com/) sources.
 
-It is written in [cython](https://cython.org/) as Python C Extension for speed and better memory usage, just so you know.
-
-## TODO:
-
-Done | Name
-:---:| ---
-:heavy_check_mark:| pdftotext
-⬜️| pdftohtml, pdftopng, pdftimages, etc
-⬜️| Make all xpdf classes usable in Python 
-⬜️| Python API based on xpdf (similar to poppler C++ API) 
-⬜️| Documentation
-⬜️| Full Test Coverage
+It is written in [cython](https://cython.org/) as Python C Extension for speed and better memory usage, just so you know
 
 
 ## pdftotext
