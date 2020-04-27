@@ -1,0 +1,22 @@
+# make it explicit that we favor the new container-based travis workers
+language: python
+python:
+  - "2.7"
+  - "3.5"
+  - "3.6"      # current default Python on Travis CI
+  - "3.7"
+  - "3.8"
+env:
+  global:
+    - COVERAGE="true"
+    - CHECK_WARNINGS="true"
+    - WITH_CYTHON="true"
+
+jobs:
+  allow_failures:
+  - python: 2.7
+
+install: source build_tools/travis/install.sh
+script:
+  - bash build_tools/travis/test_script.sh
+after_success: source build_tools/travis/after_success.sh
