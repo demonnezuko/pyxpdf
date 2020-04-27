@@ -1,0 +1,26 @@
+# make it explicit that we favor the new container-based travis workers
+language: python
+
+cache:
+  apt: true
+  directories:
+  - $HOME/.cache/pip
+  - $HOME/.ccache
+
+dist: xenial
+
+env:
+  global:
+    - COVERAGE=true
+
+matrix:
+  include:
+    # Linux environment to test 
+    -  python: 3.8
+       env: CHECK_WARNINGS="true"
+       # if: type = cron OR commit_message =~ /\[pyxpdf-dev\]/
+
+install: source build_tools/travis/install.sh
+script:
+  - bash build_tools/travis/test_script.sh
+after_success: source build_tools/travis/after_success.sh
