@@ -1,5 +1,9 @@
 # make it explicit that we favor the new container-based travis workers
 language: python
+
+os: linux
+dist: xenial
+
 python:
   - "2.7"
   - "3.5"
@@ -8,11 +12,13 @@ python:
   - "3.8"
 env:
   global:
-    - COVERAGE="true"
     - CHECK_WARNINGS="true"
     - WITH_CYTHON="true"
 
 jobs:
+  include:
+    - python: '3.8' 
+      env: COVERAGE="true"
   allow_failures:
   - python: 2.7
 
