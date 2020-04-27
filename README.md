@@ -1,4 +1,4 @@
-# pyxpdf
+# pyxpdf - v0.1
 Fast Python PDF module based on [xpdf-reader](https://www.xpdfreader.com/) sources.
 
 It is written in [cython](https://cython.org/) as Python C Extension for speed and better memory usage, just so you know
