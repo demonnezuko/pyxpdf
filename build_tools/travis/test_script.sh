@@ -11,11 +11,12 @@ set -e
 python --version
 
 run_tests() {
-    TEST_CMD="python test.py -vv"
+    TEST_CMD="test.py -vv"
     
     if [[ "$COVERAGE" == "true" ]]; then
       TEST_CMD="$TEST_CMD --coverage"
     fi
+    python $TEST_CMD
 }
 
 run_tests
