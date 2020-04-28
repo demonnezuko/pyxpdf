@@ -2,6 +2,7 @@
 #   http://lint.travis-ci.org/
 language: python
 group: travis_latest
+os: linux
 dist: xenial
 
 # Travis whitelists the installable packages, additions can be requested
@@ -16,21 +17,19 @@ cache:
   directories:
     - $HOME/.cache/pip
 
-stage: Comprehensive tests
-
 stages:
     # Do the style check and a single test job, don't proceed if it fails
     - name: Initial tests
     # Do the rest of the tests
     - name: Comprehensive tests
 
-matrix:
+jobs:
   include:
     # Do all python versions without environment variables set
-    - python: 3.5
     - stage: Initial tests
       python: 3.6
     - stage: Comprehensive tests
+      python: 3.5
     - python: 3.7
     - python: 3.8
     - python: 3.8
