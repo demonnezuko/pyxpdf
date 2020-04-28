@@ -30,6 +30,7 @@ matrix:
     - python: 3.5
     - stage: Initial tests
       python: 3.6
+    - stage: Comprehensive tests
     - python: 3.7
     - python: 3.8
     - python: 3.8
@@ -39,10 +40,10 @@ matrix:
    
 
 before_install:
-  - ./tools/travis-before-install.sh
+  - ./build_tools/travis/travis-before-install.sh
 
 script:
-  - ./tools/travis-test.sh
+  - ./build_tools/travis/travis-test.sh
 
 after_success:
-  - ./tools/travis-upload-wheel.sh
+  - ./build_tools/travis/travis-upload-wheel.sh
