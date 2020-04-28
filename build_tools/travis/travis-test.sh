@@ -105,6 +105,9 @@ elif [ -n "$USE_SDIST" ] && [ $# -eq 0 ]; then
   # Make another virtualenv to install into
   virtualenv --python=`which $PYTHON` venv-for-sdist
   . venv-for-sdist/bin/activate
+  # install test dependencies
+  $PIP install coverage
+  
   # Move out of source directory to avoid finding local pyxpdf
   pushd dist
   $PIP install pyxpdf*
