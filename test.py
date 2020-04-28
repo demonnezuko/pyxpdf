@@ -17,6 +17,8 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
+# Modified by;
+# Copyright (C) 2020, Ashutosh Varma <ashutoshvarma11@live.com>
 """
 SchoolTool test runner.
 
@@ -196,12 +198,21 @@ def get_test_files(cfg):
 def import_module(filename, cfg, cov=None):
     """Imports and returns a module."""
     filename = os.path.splitext(filename)[0]
-    modname = filename[len(cfg.basedir):].replace(os.path.sep, '.')
+
+    # get the dir where 'tests'/'ftests' are located.
+    parent_path = os.sep.join(filename.split(os.sep)[:-2])
+    # get the module name like 'tests.demo_test'
+    modname = '.'.join(filename.split(os.sep)[-2:])
+
+    sys.path.insert(0, parent_path)
+
     if modname.startswith('.'):
         modname = modname[1:]
     if cov is not None:
         cov.start()
+
     mod = __import__(modname)
+    
     if cov is not None:
         cov.stop()
     components = modname.split('.')
@@ -540,13 +551,17 @@ def main(argv):
         cfg.unit_tests = True
 
     # Set up the python path
-    sys.path[0] = cfg.basedir
+    sys.path.append(cfg.basedir)
 
     # Set up tracing before we start importing things
     cov = None
     if cfg.run_tests and cfg.coverage:
         from coverage import coverage
-        cov = coverage(omit=['test.py'])
+        # load the coverage file from same directory
+        cov_cfg =os.path.join(os.path.dirname(os.path.realpath(__file__)), '.coveragerc')
+        if not os.path.isfile(cov_cfg):
+            cov_cfg = None
+        cov = coverage(config_file=cov_cfg)
 
     # Finding and importing
     test_files = get_test_files(cfg)
