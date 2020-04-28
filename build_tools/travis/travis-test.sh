@@ -57,6 +57,9 @@ run_test()
   # We change directories to make sure that python won't find the copy
   # of pyxpdf in the source directory.
   mkdir -p empty
+  # Copy the pdf smaples for tests
+  cp -r samples empty
+  
   cd empty
   export PYTHONWARNINGS=default
 
