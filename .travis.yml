@@ -40,10 +40,10 @@ matrix:
    
 
 before_install:
-  - ./build_tools/travis/travis-before-install.sh
+  - bash ./build_tools/travis/travis-before-install.sh
 
 script:
-  - ./build_tools/travis/travis-test.sh
+  - bash ./build_tools/travis/travis-test.sh
 
 after_success:
-  - ./build_tools/travis/travis-upload-wheel.sh
+  - bash ./build_tools/travis/travis-upload-wheel.sh
