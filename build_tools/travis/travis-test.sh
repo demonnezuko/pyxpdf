@@ -99,7 +99,7 @@ elif [ -n "$USE_SDIST" ] && [ $# -eq 0 ]; then
   # ensure some warnings are not issued
   export CFLAGS=$CFLAGS" -Wno-sign-compare -Wno-unused-result"
   if [ -n "$RUN_COVERAGE" ]; then
-    COVERAGE_FLAG=--coverage
+    COVERAGE_FLAG=--with-coverage
   fi
   $PYTHON setup.py sdist --with-cython --warnings $COVERAGE_FLAG
   # Make another virtualenv to install into
