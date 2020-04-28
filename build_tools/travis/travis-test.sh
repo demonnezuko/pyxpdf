@@ -106,7 +106,7 @@ elif [ -n "$USE_SDIST" ] && [ $# -eq 0 ]; then
   virtualenv --python=`which $PYTHON` venv-for-sdist
   . venv-for-sdist/bin/activate
   # install test dependencies
-  $PIP install coverage
+  $PIP install coverage cython
   
   # Move out of source directory to avoid finding local pyxpdf
   pushd dist
