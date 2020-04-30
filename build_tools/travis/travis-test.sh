@@ -36,32 +36,28 @@ setup_base()
   sysflags="$($PYTHON -c "from distutils import sysconfig; \
     print (sysconfig.get_config_var('CFLAGS'))")"
   export CFLAGS=$CFLAGS" $sysflags $werrors -Wlogical-op -Wno-sign-compare"
-  # We used to use 'setup.py install' here, but that has the terrible
-  # behaviour that if a copy of the package is already installed in the
-  # install location, then the new copy just gets dropped on top of it.
+ 
   # Using 'pip install' also has the advantage that it tests that pyxpdf 
   # is 'pip install' compatible,
-  
   $PIP install -v . 2>&1 | tee log
 }
 
 run_test()
 {
   # Install the test dependencies.
-  # $PIP install -r test_requirements.txt
+  $PIP install -r test_requirements.txt
 
   if [ -n "$RUN_COVERAGE" ]; then
     COVERAGE_FLAG=--coverage
   fi
 
-  # We change directories to make sure that python won't find the copy
-  # of pyxpdf in the source directory.
-  mkdir -p empty
-  # Copy the pdf smaples for tests
-  cp -r samples empty
-  
-  cd empty
   export PYTHONWARNINGS=default
+
+  # Ideally we should change dir so that tests don't find
+  # local pyxpdf but due the problem with our test runner 
+  # script and Cython.Coverage which require test script 
+  # to run from source root otherwise it won't find sources
+  # and crash. So for now we are running tests from source dir.
 
   if [ -n "$RUN_FULL_TESTS" ]; then
     export PYTHONWARNINGS="ignore::DeprecationWarning:virtualenv"
@@ -70,7 +66,7 @@ run_test()
     $PYTHON ../test.py -v 
   fi
 
-  if [ -n "$RUN_COVERAGE" ]; then
+  if [ -n "$RUN_COVERAGE" ] && [ -n "$RUN_FULL_TESTS" ]; then
     # Upload coverage files to codecov
     bash <(curl -s https://codecov.io/bash) -X coveragepy
   fi
@@ -105,8 +101,9 @@ elif [ -n "$USE_SDIST" ] && [ $# -eq 0 ]; then
   # Make another virtualenv to install into
   virtualenv --python=`which $PYTHON` venv-for-sdist
   . venv-for-sdist/bin/activate
+  
   # install test dependencies
-  $PIP install coverage cython
+  $PIP install -r test_requirements.txt
   
   # Move out of source directory to avoid finding local pyxpdf
   pushd dist
