@@ -61,9 +61,9 @@ run_test()
 
   if [ -n "$RUN_FULL_TESTS" ]; then
     export PYTHONWARNINGS="ignore::DeprecationWarning:virtualenv"
-    $PYTHON -b ../test.py -vv $COVERAGE_FLAG
+    $PYTHON -b test.py -vv $COVERAGE_FLAG
   else
-    $PYTHON ../test.py -v 
+    $PYTHON test.py -v 
   fi
 
   if [ -n "$RUN_COVERAGE" ] && [ -n "$RUN_FULL_TESTS" ]; then
