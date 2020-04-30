@@ -210,7 +210,7 @@ def import_module(filename, cfg, cov=None):
 
     try:
         mod = __import__(modname)
-    except ModuleNotFoundError:
+    except ImportError:
         # get the dir where 'tests'/'ftests' are located.
         parent_path = os.sep.join(filename.split(os.sep)[:-2])
         # get the module name like 'tests.demo_test'
