@@ -29,24 +29,24 @@ install:
 
 build: off
 build_script:
-  - ps: rm .\src\pyxpdf\*.cpp
   - python -u setup.py bdist_wheel --with-cython
-  - python -u setup.py build_ext --inplace --with-cython
+  - ps: rm .\src\pyxpdf\*.cpp .\src\pyxpdf\*.pyd || echo
+  - pip install --pre --no-index --upgrade --find-links=dist pyxpdf
   - python -u test.py -vv 
 
 test: off
 test_script:
   - ps: Get-ChildItem dist\*.whl | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
   
-on_success:
-  - ps: |
-        if ($env:APPVEYOR_REPO_TAG -eq "true" -and $env:APPVEYOR_REPO_TAG_NAME.StartsWith('v'))
-        {
-          python -m twine upload --skip-existing --repository-url https://test.pypi.org/legacy/ .\dist\*
+# on_success:
+#   - ps: |
+#         if ($env:APPVEYOR_REPO_TAG -eq "true" -and $env:APPVEYOR_REPO_TAG_NAME.StartsWith('v'))
+#         {
+#           python -m twine upload --skip-existing --repository-url https://test.pypi.org/legacy/ .\dist\*
           
-          # Unnesessary Write-Host for making exitcode 0
-          if ($?)
-            { Write-Host "Wheel uploaded." }
-          else 
-            { Write-Host "Wheel upload failed." }
-        }
+#           # Unnesessary Write-Host for making exitcode 0
+#           if ($?)
+#             { Write-Host "Wheel uploaded." }
+#           else 
+#             { Write-Host "Wheel upload failed." }
+#         }
