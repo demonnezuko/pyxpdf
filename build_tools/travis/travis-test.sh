@@ -100,7 +100,7 @@ elif [ -n "$USE_SDIST" ] && [ $# -eq 0 ]; then
   
   # Move out of source directory to avoid finding local pyxpdf
   pushd dist
-  $PIP install pyxpdf*
+  $PIP install -vv pyxpdf*
   popd
   run_test
 else
