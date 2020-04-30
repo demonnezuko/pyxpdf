@@ -79,7 +79,7 @@ if [ -n "$USE_WHEEL" ] && [ $# -eq 0 ]; then
   . venv-for-wheel/bin/activate
   # Move out of source directory to avoid finding local pyxpdf
   pushd dist
-  $PIP install --pre --no-index --upgrade --find-links=. pyxpdf
+  $PIP install -vv --pre --no-index --upgrade --find-links=. pyxpdf
   popd
 
   run_test
