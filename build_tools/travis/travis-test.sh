@@ -69,7 +69,7 @@ run_test()
 export PYTHON
 export PIP
 
-if [ -n "$USE_WHEEL" ] && [ $# -eq 0 ]; then
+if [ "$USE_WHEEL" == "true" ] && [ $# -eq 0 ]; then
   # ensure some warnings are not issued
   export CFLAGS=$CFLAGS" -Wno-sign-compare -Wno-unused-result"
 
@@ -84,7 +84,7 @@ if [ -n "$USE_WHEEL" ] && [ $# -eq 0 ]; then
 
   run_test
 
-elif [ -n "$USE_SDIST" ] && [ $# -eq 0 ]; then
+elif [ "$USE_SDIST" == "true" ] && [ $# -eq 0 ]; then
   # ensure some warnings are not issued
   export CFLAGS=$CFLAGS" -Wno-sign-compare -Wno-unused-result"
   if [ -n "$RUN_COVERAGE" ]; then
