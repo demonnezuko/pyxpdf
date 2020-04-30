@@ -30,7 +30,7 @@ install:
 build: off
 build_script:
   - python -u setup.py bdist_wheel --with-cython
-  - ps: rm .\src\pyxpdf\*.cpp .\src\pyxpdf\*.pyd || echo
+  - del /F /Q "src\pyxpdf\*.cpp" "src\pyxpdf\*.pyd" 2>NUL || echo
   - pip install --pre --no-index --upgrade --find-links=dist pyxpdf
   - python -u test.py -vv 
 
