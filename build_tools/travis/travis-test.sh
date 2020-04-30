@@ -59,7 +59,7 @@ run_test()
   if [ "$WITH_COVERAGE" == "true" ]; then
     export PYTHONWARNINGS="ignore::DeprecationWarning:virtualenv"
     $PYTHON -b test.py -vv --coverage
-    bash <(curl -s https://codecov.io/bash) -X coveragepy
+    bash <(curl -s https://codecov.io/bash) -X coveragepy || echo "codecov upload failed"
   else
     $PYTHON test.py -v 
   fi
