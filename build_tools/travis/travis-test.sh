@@ -39,7 +39,7 @@ setup_base()
  
   # Using 'pip install' also has the advantage that it tests that pyxpdf 
   # is 'pip install' compatible,
-  $PIP install -v . 2>&1 | tee log
+  $PIP install -vv . 2>&1 | tee log
 }
 
 run_test()
@@ -47,9 +47,6 @@ run_test()
   # Install the test dependencies.
   $PIP install -r test_requirements.txt
 
-  if [ -n "$RUN_COVERAGE" ]; then
-    COVERAGE_FLAG=--coverage
-  fi
 
   export PYTHONWARNINGS=default
 
@@ -59,16 +56,12 @@ run_test()
   # to run from source root otherwise it won't find sources
   # and crash. So for now we are running tests from source dir.
 
-  if [ -n "$RUN_FULL_TESTS" ]; then
+  if [ "$WITH_COVERAGE" == "true" ]; then
     export PYTHONWARNINGS="ignore::DeprecationWarning:virtualenv"
-    $PYTHON -b test.py -vv $COVERAGE_FLAG
+    $PYTHON -b test.py -vv --coverage
+    bash <(curl -s https://codecov.io/bash) -X coveragepy
   else
     $PYTHON test.py -v 
-  fi
-
-  if [ -n "$RUN_COVERAGE" ] && [ -n "$RUN_FULL_TESTS" ]; then
-    # Upload coverage files to codecov
-    bash <(curl -s https://codecov.io/bash) -X coveragepy
   fi
 }
 
